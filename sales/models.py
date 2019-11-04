@@ -35,7 +35,7 @@ class Customer(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     product = models.CharField(max_length=225)
-    product_sale_price = models.DecimalField(max_digits=19, decimal_places=2)
+    product_sale_price = models.DecimalField(max_digits=19, decimal_places=2, default=0)
     date_bought = models.DateTimeField(auto_now_add=True, blank=True)
 
     # This function looks at the sale price of an item in the order then subtracts the amount paid for that order
