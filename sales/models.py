@@ -28,6 +28,9 @@ class Customer(models.Model):
 
     full_name = property(full_name)
 
+    def __str__(self):
+        return f"Customer ID {self.pk}, {self.full_name}"
+
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
