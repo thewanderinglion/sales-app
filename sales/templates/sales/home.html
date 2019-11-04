@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "sales/base.html" %}
+{% block content %}
+	<h1>Celtis Sales Home</h1>
+	<div class="content-section">
+	<h3><a href="{% url 'sales-customer' %}">View all Customers</a></h3>
+	</div>
+	<div class="content-section">
+	<h3><a href="{% url 'sales-order' %}">View all Orders</a></h3>
+	</div>
+	<div class="content-section">
+	<h3><a href="{% url 'sales-payment' %}">View all Payments</a></h3>
+	</div>
+	
 
-</body>
-</html>
+{% endblock content %}
+class="content-section"
