@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "sales/base.html" %}
+{% block content %}
+	<h1>Order List</h1>
+		{% for order in orders %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <h3><a class="mr-2" href="#">{{ order.customer.full_name }}</a></h3>
+		      <small class="text-muted">Order ID {{ order.pk }}</small>
+		    </div>
+		    <body><a class="article-title" href="#">Product Purchased: {{ order.product }}</a></body>
+		    <p class="article-content">Price: ${{ order.product_sale_price }}</p>
+		    <p class="article-content">Purchase Date: {{ order.date_bought }}</p>
+		    <p class="article-content">Total Amount Owed: ${{ order.amount_owed }}</p>
+		    <p class="article-content">Total Payment Made: ${{ order.payments_total }}</p>
+		  </div>
+		</article>
+	{% endfor %}
+{% endblock content %}

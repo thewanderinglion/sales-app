@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "sales/base.html" %}
+{% block content %}
+	<h1>Payment List</h1>
+		{% for payment in payments %}
+		<article class="media content-section">
+		  <div class="media-body">
+		    <div class="article-metadata">
+		      <h3><a class="mr-2" href="#">{{ payment.customer.full_name }}</a></h3>
+		      <small class="text-muted">Payment ID {{ payment.pk }}</small>
+		    </div>
+		    <body><a class="article-title" href="#">For Order ID: {{ payment.order.pk }}</a></body>
+		    <p class="article-content">Price: ${{ payment.order.product_sale_price }}</p>
+		    <p class="article-content">Purchase Date: {{ payment.order.date_bought }}</p>
+		    <p class="article-content">Total Amount Owed: ${{ payment.order.amount_owed }}</p>
+		    <p class="article-content">Payment Type: {{ payment.payment_type }}</p>
+		    <p class="article-content">Payment Date: {{ payment.date_paid }}</p>
+		    <p class="article-content">Total Payment Made: ${{ payment.payment_amount }}</p>
+		  </div>
+		</article>
+	{% endfor %}
+{% endblock content %}
