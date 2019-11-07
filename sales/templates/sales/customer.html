@@ -1,16 +1,16 @@
 {% extends "sales/base.html" %}
 {% block content %}
-	<h1>Customer List</h1>
-		{% for customer in customers %}
-		<article class="media content-section">
-		  <div class="media-body">
-		    <div class="article-metadata">
-		      <h3><a class="mr-2" href="#">{{ customer.full_name }}</a></h3>
-		      <small class="text-muted">Customer ID {{ customer.pk }}</small>
-		    </div>
-		    <body><a class="article-title" href="#">Total Amount Owed: ${{ customer.amount_owed }}</a></body>
-		    <p class="article-content">Email: {{ customer.email }}</p>
-		  </div>
-		</article>
-	{% endfor %}
+    <h1>Customer List</h1>
+    {% for customer in customers %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <h3><a class="mr-2" href="#">{{ customer.full_name }}</a></h3>
+                    <small class="text-muted">Customer ID {{ customer.pk }}</small>
+                </div>
+                <body><a class="article-title" href="#">Total Amount Owed: ${{ customer.amount_owed }}</a></body>
+                <p class="article-content">Email: {{ customer.email }}</p>
+            </div>
+        </article>
+    {% endfor %}
 {% endblock content %}
