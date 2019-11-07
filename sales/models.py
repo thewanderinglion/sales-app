@@ -47,10 +47,9 @@ class Order(models.Model):
     amount_owed = property(amount_owed)
 
     def payments_total(self):
-        payments_total = Payment.objects.filter(order=self).aggregate(
+        return Payment.objects.filter(order=self).aggregate(
             payments_total=Coalesce(Sum('payment_amount', output_field=models.DecimalField()), 0)
         ).get('payments_total')
-        return payments_total
 
     payments_total = property(payments_total)
 
