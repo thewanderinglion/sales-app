@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
-
 '''
-These tests test whether the URLs return  HTTPResponse of 200 (meaning the request has succeeded)
+These tests test whether the URLs return HTTPResponse of 200 (meaning the request has succeeded)
 '''
 class ViewsResponsivenessTest(TestCase):
     def test_home_page(self):
