@@ -1,3 +1,5 @@
+import decimal
+
 from django.db import models
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
@@ -9,10 +11,11 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
 
-    # This function fetches the total value of all the orders (from the Orders table) then subtracts the total value
-    # of all the payments (from the Payments table) to calculate the total amount a customer owes
-
     def amount_owed(self):
+        """"
+        This function fetches the total value of all the orders (from the Orders table) then subtracts the total value
+        of all the payments (from the Payments table) to calculate the total amount a customer owes
+        """
         total_cust_orders = Order.objects.filter(customer=self).aggregate(
             order_total=Coalesce(Sum('product_sale_price', output_field=models.DecimalField()), 0)
         ).get('order_total')
@@ -38,11 +41,12 @@ class Order(models.Model):
     product_sale_price = models.DecimalField(max_digits=19, decimal_places=2, default=0)
     date_bought = models.DateTimeField(auto_now_add=True, blank=True)
 
-    # This function looks at the sale price of an item in the order then subtracts the amount paid for that order
-    # (derived from the Payment table) to calculate the amount the customer owes for this order
-
     def amount_owed(self):
-        return self.product_sale_price - self.payments_total
+        """
+        This function looks at the sale price of an item in the order then subtracts the amount paid for that order
+        (derived from the Payment table) to calculate the amount the customer owes for this order
+        """
+        return decimal.Decimal(self.product_sale_price) - decimal.Decimal(self.payments_total)
 
     amount_owed = property(amount_owed)
 
