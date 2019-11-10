@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+     <!-- The meta tags, Bootstrap CSS are from getbootstrap.com -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- # Typed in afterwards to link to the CSS file: -->
     <link rel="stylesheet" type="text/css" href="{% static 'sales/main.css' %}">
 
     {% if title %}
@@ -37,6 +38,7 @@
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="{% url "sales-about" %}">About</a>
                     <a class="nav-item nav-link" href="{% url "admin:index" %}">Login</a>
                 </div>
             </div>
@@ -47,6 +49,8 @@
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8">
+            {% comment %}This typed sections affects the messages shown when the user successfully
+            inputs data in the form{% endcomment %}
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">
@@ -54,6 +58,7 @@
                     </div>
                 {% endfor %}
             {% endif %}
+            {% comment %}Rest of the pages are sandwiched in this content block{% endcomment %}
             {% block content %}{% endblock %}
 
         </div>
@@ -76,7 +81,7 @@
         </div>
     </div>
 </main>
-
+{% comment %}The following are from getbootstrap.com starter template:{% endcomment %}
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

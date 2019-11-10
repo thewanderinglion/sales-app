@@ -3,6 +3,10 @@
 {% block content %}
     <div class='content-section'>
         <form method="POST">
+            {% comment %} POST lets you enter data that allows you to alter data on the server-side.
+            csrf_token is a security measure. It stands for "cross site request forgeries"
+            Django doesn't let you load a form without the csrf token {% endcomment %}
+            {% comment %}-->csrf_token is called a template tag{% endcomment %}
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Accept Payment</legend>

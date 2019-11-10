@@ -1,6 +1,8 @@
 {% extends "sales/base.html" %}
 {% block content %}
     <h1>Celtis Sales Home</h1>
+    {% comment %}    The divs create a border, the <a> means an anchor tag to hyperlink to a different page. h3 is for size
+    The class is a bootstrap class for formatting{% endcomment %}
     <div class="content-section">
         <h3><a href="{% url 'sales-customer' %}">View all Customers</a></h3>
     </div>
