@@ -2,6 +2,14 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import Customer, Order, Payment
 
+# Imported for mixer:
+from unittest.mock import patch
+import pytest
+from django.contrib.auth.models import signals
+from django.conf import settings
+from mixer.backend.django import mixer
+
+
 class ViewsResponsivenessTest(TestCase):
     """
     These tests test whether the URLs return HTTPResponse of 200 (meaning the request has succeeded)
