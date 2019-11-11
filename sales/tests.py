@@ -2,17 +2,17 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import Customer, Order, Payment
 
-# Imported for mixer:
-from unittest.mock import patch
-import pytest
-from django.contrib.auth.models import signals
-from django.conf import settings
+# # Imported for mixer:
+# from unittest.mock import patch
+# import pytest
+# from django.contrib.auth.models import signals
+# from django.conf import settings
 from mixer.backend.django import mixer
 
 
 class ViewsResponsivenessTest(TestCase):
     """
-    These tests test whether the URLs return HTTPResponse of 200 (meaning the request has succeeded)
+    These 8 tests test whether the URLs return HTTPResponse of 200 (meaning the request has succeeded)
     """
     def test_home_page(self):
         response = self.client.get(reverse('sales-home'))
@@ -49,7 +49,7 @@ class ViewsResponsivenessTest(TestCase):
 
 class OrderModelTests(TestCase):
     """
-    These tests test whether some of the variables in the model are functioning as expected
+    These 4 tests test whether some of the variables in the model are functioning as expected
     """
     def test_initial_customer_owed_is_zero(self):
         init_cust = Customer(first_name="test_first", last_name="test_last", email="test@email.com")
@@ -59,3 +59,17 @@ class OrderModelTests(TestCase):
         init_cust = Customer(first_name="test_first", last_name="test_last", email="test@email.com")
         init_order = Order(customer=init_cust, product="test_product", product_sale_price=2000.00)
         self.assertEqual(init_order.amount_owed, init_order.product_sale_price)
+
+    def test_customer_amount_owed_equals_order_amount_owed(self):
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order)
+        self.assertEqual(customer.amount_owed, order.amount_owed)
+
+    def test_customer_amount_owed_equals_order_sale_price_minus_payment_amount(self):
+        """
+        This method keeps failing just by a tiny fraction of an error. Please advise!
+        """
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order, customer=customer)
+        payment = mixer.blend(Payment, order=order, customer=customer)
+        self.assertEqual(abs(customer.amount_owed), (abs((order.product_sale_price - payment.payment_amount))))

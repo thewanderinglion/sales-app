@@ -45,7 +45,8 @@ def customer_registration(request):
             return redirect('sales-customer')
     else:
         form = CustomerRegistrationForm()
-    return render(request, 'sales/customer_registration.html', {'form': form, 'title': 'New Customer Registration'})
+    context = {'form': form, 'title': 'New Customer Registration'}
+    return render(request, 'sales/customer_registration.html', context)
 
 
 def order_placement(request):
