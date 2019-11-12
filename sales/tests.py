@@ -60,17 +60,11 @@ class OrderModelTests(TestCase):
         init_order = Order(customer=init_cust, product="test_product", product_sale_price=2000.00)
         self.assertEqual(init_order.amount_owed, init_order.product_sale_price)
 
-    def test_customer_amount_owed_equals_order_amount_owed(self):
-        customer = mixer.blend(Customer)
-        order = mixer.blend(Order, customer=customer)
-        self.assertEqual(order.customer, customer)
-        # self.assertEqual(customer.amount_owed, order.amount_owed)
-
     def test_customer_amount_owed_equals_order_sale_price_minus_payment_amount(self):
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
         payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=1000.00)
-        self.assertEqual(abs(customer.amount_owed), (abs((order.product_sale_price - payment.payment_amount))))
+        self.assertEqual((customer.amount_owed), (order.product_sale_price - payment.payment_amount))
 
     def test_mixer(self):
         customer = mixer.blend(Customer, last_name='j')
@@ -80,4 +74,3 @@ class OrderModelTests(TestCase):
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer)
         self.assertEqual(order.customer, customer)
-        # self.assertEqual(customer.amount_owed, order.amount_owed)
