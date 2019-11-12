@@ -49,7 +49,7 @@ class ViewsResponsivenessTest(TestCase):
 
 class OrderModelTests(TestCase):
     """
-    These 4 tests test whether some of the variables in the model are functioning as expected
+    These 7 tests test whether some of the variables in the model are functioning as expected
     """
     def test_initial_customer_owed_is_zero(self):
         init_cust = Customer(first_name="test_first", last_name="test_last", email="test@email.com")
@@ -74,7 +74,7 @@ class OrderModelTests(TestCase):
 
     def test_customer_amount_owed_can_be_negative(self):
         """
-        checking if the customer amount owed becomes negative
+        checking if the customer amount owed becomes negative to ensure that the calculations are working
         """
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer, product_sale_price=1000.00)
