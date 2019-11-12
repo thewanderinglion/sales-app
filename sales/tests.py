@@ -66,6 +66,12 @@ class OrderModelTests(TestCase):
         payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=1000.00)
         self.assertEqual((customer.amount_owed), (order.product_sale_price - payment.payment_amount))
 
+    def test_customer_amount_owed_equals_zero_after_full_payment(self):
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
+        payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=2000.00)
+        self.assertEqual(customer.amount_owed, 0)
+
     def test_customer_amount_owed_can_be_negative(self):
         """
         checking if the customer amount owed becomes negative
