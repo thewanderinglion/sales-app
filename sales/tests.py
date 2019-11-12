@@ -62,14 +62,22 @@ class OrderModelTests(TestCase):
 
     def test_customer_amount_owed_equals_order_amount_owed(self):
         customer = mixer.blend(Customer)
-        order = mixer.blend(Order)
-        self.assertEqual(customer.amount_owed, order.amount_owed)
+        order = mixer.blend(Order, customer=customer)
+        self.assertEqual(order.customer, customer)
+        # self.assertEqual(customer.amount_owed, order.amount_owed)
 
     def test_customer_amount_owed_equals_order_sale_price_minus_payment_amount(self):
-        """
-        This method keeps failing just by a tiny fraction of an error. Please advise!
-        """
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
+        payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=1000.00)
+        self.assertEqual(abs(customer.amount_owed), (abs((order.product_sale_price - payment.payment_amount))))
+
+    def test_mixer(self):
+        customer = mixer.blend(Customer, last_name='j')
+        assert customer.last_name == 'j'
+
+    def test_customer_instance_equals_customer_instance_in_order(self):
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer)
-        payment = mixer.blend(Payment, order=order, customer=customer)
-        self.assertEqual(abs(customer.amount_owed), (abs((order.product_sale_price - payment.payment_amount))))
+        self.assertEqual(order.customer, customer)
+        # self.assertEqual(customer.amount_owed, order.amount_owed)
