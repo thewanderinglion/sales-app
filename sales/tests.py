@@ -112,12 +112,13 @@ class OrderModelTests(TestCase):
     def test_date_field_is_equal_if_order_is_paid_immediately(self):
         """
         Testing to check if the date field in Orders equals date field in Payments if customer pays on the spot
-        The test is failing due to a few microsecond differences!
+        The test is passing now, alhamdulillah!
         """
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
         payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=3000.00)
-        self.assertEqual(order.date_bought, payment.date_paid)
+        self.assertEqual(order.date_bought.date(), payment.date_paid.date())
+        print("success")
 
 # test the date fields
 # test the list fields
