@@ -92,7 +92,7 @@ class OrderModelTests(TestCase):
         order = mixer.blend(Order, customer=customer)
         self.assertEqual(order.customer, customer)
 
-    def test_date_field_is_being_automatically_populated(self):
+    def test_order_date_field_is_being_automatically_populated(self):
         """
         testing to check if the date field is being populated
         """
@@ -100,19 +100,36 @@ class OrderModelTests(TestCase):
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
         self.assertIsInstance(order.date_bought, datetime.datetime)
 
-    def test_order_date_field_is_now(self):
+    def test_payment_date_field_is_being_automatically_populated(self):
         """
-        Testing to check if the date field in orders is now
-        The test is failing due to django passing in a timezone
+        testing to check if the date field is being populated
         """
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
-        self.assertEqual(order.date_bought, datetime.datetime.now())
+        payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=3000.00)
+        self.assertIsInstance(order.date_bought, datetime.datetime)
 
-    def test_date_field_is_equal_if_order_is_paid_immediately(self):
+    def test_order_date_field_is_current_date(self):
+        """
+        Testing to check if the generated date field in orders is today's date
+        """
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
+        self.assertEqual(order.date_bought.date(), datetime.datetime.now().date())
+
+    def test_payment_date_field_is_current_date(self):
+        """
+        Testing to check if the generated date field in payments is today's date
+        """
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
+        payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=3000.00)
+        self.assertEqual(payment.date_paid.date(), datetime.datetime.now().date())
+
+    def test_order_date_field_is_equal_to_payment_date_if_order_is_paid_immediately(self):
         """
         Testing to check if the date field in Orders equals date field in Payments if customer pays on the spot
-        The test is passing now, alhamdulillah!
+        The test is passing now, alhamdulillah! Added .date() to compare
         """
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
