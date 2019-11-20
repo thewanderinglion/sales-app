@@ -100,13 +100,13 @@ class OrderModelTests(TestCase):
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
         self.assertIsInstance(order.date_bought, datetime.datetime)
 
-    def test_date_field_is_now(self):
+    def test_order_date_field_is_now(self):
         """
         Testing to check if the date field in orders is now
         The test is failing due to django passing in a timezone
         """
         customer = mixer.blend(Customer)
-        order = mixer.blend(Order, customer=customer, product_sale_price=3000.00, date_bought=datetime.datetime.now())
+        order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
         self.assertEqual(order.date_bought, datetime.datetime.now())
 
     def test_date_field_is_equal_if_order_is_paid_immediately(self):
