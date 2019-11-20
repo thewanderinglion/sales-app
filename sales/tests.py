@@ -1,6 +1,8 @@
+from django.db.models import DateTimeField
 from django.test import TestCase
 from django.urls import reverse
 from .models import Customer, Order, Payment
+import datetime
 
 # # Imported for mixer:
 # from unittest.mock import patch
@@ -89,3 +91,15 @@ class OrderModelTests(TestCase):
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer)
         self.assertEqual(order.customer, customer)
+
+    def test_date_fields(self):
+        """
+        testing to check if the date field is being populated
+        """
+        customer = mixer.blend(Customer)
+        order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
+        self.assertIsInstance(order.date_bought, datetime.datetime)
+
+
+# test the date fields
+# test the list fields
