@@ -137,17 +137,5 @@ class OrderModelTests(TestCase):
         self.assertEqual(order.date_bought.date(), payment.date_paid.date())
         print("success")
 
-    def test_payment_date_is_ahead_of_order_date(self):
-        """
-        how do I create a payment in Mixer 7 days in the future?
-        """
-        customer = mixer.blend(Customer)
-        order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
-        now = datetime.datetime.now()
-        future = now + datetime.timedelta(days=7)
-        payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=3000.00, date_paid=future)
-        self.assertLess(order.date_bought, payment.date_paid)
-
-
 # test the date fields
 # test the list fields
