@@ -137,9 +137,11 @@ class OrderModelTests(TestCase):
         self.assertEqual(order.date_bought.date(), payment.date_paid.date())
         print("success")
 
-    def test_payment_date_is_ahead_of_order_date(self):
+    def test_payment_date_is_later_than_order_date(self):
         """
         how do I create a payment with date_paid in Mixer 7 days in the future?
+        this test will work very well with live data. if the test fails, then that means users are creating payments
+        without associated orders
         """
         customer = mixer.blend(Customer)
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
