@@ -67,6 +67,7 @@ class OrderModelTests(TestCase):
         customer = mixer.blend(Customer)
         order_1 = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
         order_2 = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
+        print(customer.amount_owed, 4000)
         self.assertEqual(customer.amount_owed, 4000.00)
 
     def test_customer_amount_owed_equals_order_sale_price_minus_payment_amount(self):
@@ -156,6 +157,27 @@ class OrderModelTests(TestCase):
         future = now + datetime.timedelta(days=7)
         payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=3000.00, date_paid=future)
         self.assertLess(order.date_bought, payment.date_paid)
+
+    def test_whether_app_can_process_large_number_of_orders(self):
+        """
+        generating 1000 orders then verifying if all of them correctly generated
+        ***excellent code to review many Python techniques
+        """
+        order_list = []
+        def count_order():
+            for i in range(1000):
+                customer = mixer.blend(Customer)
+                order = mixer.blend(Order, customer=customer, product_sale_price=1.00)
+                order_list.append(order)
+            return len(order_list)
+        print("checking count", count_order())
+        self.assertEqual(count_order(), 1000)
+
+
+
+
+
+
 
 # test the date fields
 # test the list fields

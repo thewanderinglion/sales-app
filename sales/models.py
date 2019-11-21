@@ -58,7 +58,7 @@ class Order(models.Model):
     payments_total = property(payments_total)
 
     def __str__(self):
-        return f"Order ID {self.pk}, {self.customer.full_name}"
+        return f"Order ID {self.pk}, {self.customer.full_name}, {self.product_sale_price}"
 
 
 class Payment(models.Model):
