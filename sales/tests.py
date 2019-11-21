@@ -1,3 +1,4 @@
+from mixer.backend.django import mixer
 from django.db.models import DateTimeField
 from django.test import TestCase
 from django.urls import reverse
@@ -9,7 +10,7 @@ import datetime
 # import pytest
 # from django.contrib.auth.models import signals
 # from django.conf import settings
-from mixer.backend.django import mixer
+
 
 
 class ViewsResponsivenessTest(TestCase):
@@ -61,6 +62,12 @@ class OrderModelTests(TestCase):
         init_cust = Customer(first_name="test_first", last_name="test_last", email="test@email.com")
         init_order = Order(customer=init_cust, product="test_product", product_sale_price=2000.00)
         self.assertEqual(init_order.amount_owed, init_order.product_sale_price)
+
+    def test_customer_ammount_owed_equals_order_sales_price_from_multiple_orders(self):
+        customer = mixer.blend(Customer)
+        order_1 = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
+        order_2 = mixer.blend(Order, customer=customer, product_sale_price=2000.00)
+        self.assertEqual(customer.amount_owed, 4000.00)
 
     def test_customer_amount_owed_equals_order_sale_price_minus_payment_amount(self):
         customer = mixer.blend(Customer)
