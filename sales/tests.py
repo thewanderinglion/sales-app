@@ -52,7 +52,7 @@ class ViewsResponsivenessTest(TestCase):
 
 class OrderModelTests(TestCase):
     """
-    These 7 tests test whether some of the variables in the model are functioning as expected
+    These 14 tests test whether some of the variables in the model are functioning as expected
     """
     def test_initial_customer_owed_is_zero(self):
         init_cust = Customer(first_name="test_first", last_name="test_last", email="test@email.com")
