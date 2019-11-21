@@ -143,7 +143,6 @@ class OrderModelTests(TestCase):
         order = mixer.blend(Order, customer=customer, product_sale_price=3000.00)
         payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=3000.00)
         self.assertEqual(order.date_bought.date(), payment.date_paid.date())
-        print("success")
 
     def test_payment_date_is_later_than_order_date(self):
         """
@@ -170,13 +169,19 @@ class OrderModelTests(TestCase):
                 order = mixer.blend(Order, customer=customer, product_sale_price=1.00)
                 order_list.append(order)
             return len(order_list)
-        print("checking count", count_order())
+        # print("checking count", count_order())
         self.assertEqual(count_order(), 1000)
 
-
-
-
-
+    def test_whether_app_can_process_large_number_of_payments(self):
+        payment_list = []
+        def count_payments():
+            for i in range(1000):
+                customer = mixer.blend(Customer)
+                order = mixer.blend(Order, customer=customer, product_sale_price=1.00)
+                payment = mixer.blend(Payment, order=order, customer=customer, payment_amount=1.00)
+                payment_list.append(payment)
+            return len(payment_list)
+        self.assertEqual(count_payments(), 1000)
 
 
 # test the date fields
