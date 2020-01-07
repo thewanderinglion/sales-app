@@ -5,13 +5,6 @@ from django.urls import reverse
 from .models import Customer, Order, Payment
 import datetime
 
-# # Imported for mixer:
-# from unittest.mock import patch
-# import pytest
-# from django.contrib.auth.models import signals
-# from django.conf import settings
-
-
 
 class ViewsResponsivenessTest(TestCase):
     """
@@ -183,6 +176,3 @@ class OrderModelTests(TestCase):
             return len(payment_list)
         self.assertEqual(count_payments(), 1000)
 
-
-# test the date fields
-# test the list fields
